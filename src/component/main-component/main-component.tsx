@@ -12,8 +12,21 @@ import { BaseUrl } from "../../api/base-url";
 import { useDispatch, useSelector } from "react-redux";
 import { ReducerEnum } from "../../enum/reducer.enum";
 import { addResource } from "../../Store/reducers/action";
+import CategoriePage from "../../page/categorie/categorie.page";
 export default function MainComponent() {
   const [isAuth, setIsAuth] = useState(false);
+  const user = useSelector((state: any) => state.user);
+  useEffect(() => {
+    if (user.data.access_token) {
+      dispatch(
+        addResource(ReducerEnum.RequestConfig, {
+          token: user.data.access_token,
+        })
+      );
+      setIsAuth(true);
+    }
+    console.log(user.data);
+  }, [user.data]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(addResource(ReducerEnum.RequestConfig, { baseUrl: BaseUrl }));
@@ -37,6 +50,12 @@ export default function MainComponent() {
                   <Route
                     path="emprunt"
                     element={<ListEmpruntPage></ListEmpruntPage>}
+                  ></Route>
+                </Route>
+                <Route>
+                  <Route
+                    path="categorie"
+                    element={<CategoriePage></CategoriePage>}
                   ></Route>
                 </Route>
               </Routes>
