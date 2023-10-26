@@ -13,21 +13,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReducerEnum } from "../../enum/reducer.enum";
 import { addResource } from "../../Store/reducers/action";
 export default function MainComponent() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(addResource(ReducerEnum.RequestConfig, { baseUrl: BaseUrl }));
   }, []);
   return (
     <Box height={"100%"} width={"100%"}>
-      {isAuth ? (
-        <Box display={"flex"} height={"100%"}>
-          <Box height={"100%"}>
-            <SiderComponent></SiderComponent>
-          </Box>
-          <Box flex={1}>
-            <NavBarComponent></NavBarComponent>
-            <BrowserRouter>
+      <BrowserRouter>
+        {isAuth ? (
+          <Box display={"flex"} height={"100%"}>
+            <Box height={"100%"}>
+              <SiderComponent></SiderComponent>
+            </Box>
+            <Box display={"flex"} flexDirection={"column"} flex={1}>
+              <NavBarComponent></NavBarComponent>
+
               <Routes>
                 <Route path={"/"} element={<HomePage></HomePage>}></Route>
                 <Route>
@@ -40,12 +41,12 @@ export default function MainComponent() {
                   ></Route>
                 </Route>
               </Routes>
-            </BrowserRouter>
+            </Box>
           </Box>
-        </Box>
-      ) : (
-        <LoginPage></LoginPage>
-      )}
+        ) : (
+          <LoginPage></LoginPage>
+        )}
+      </BrowserRouter>
     </Box>
   );
 }

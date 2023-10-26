@@ -1,1 +1,1 @@
-export const BaseUrl = "https://gesttion-bibiliotheque-back.vercel.app/";
+export const BaseUrl = "http://192.168.1.41:8081/";
