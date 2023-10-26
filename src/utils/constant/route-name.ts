@@ -1,3 +1,5 @@
 export const RouteName = {
-  index: "/",
+  Index: "/",
+  Livre :'/livre',
+  Emprunt: "/emprunt"
 };
