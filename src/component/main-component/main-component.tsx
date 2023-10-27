@@ -13,9 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReducerEnum } from "../../enum/reducer.enum";
 import { addResource } from "../../Store/reducers/action";
 import CategoriePage from "../../page/categorie/categorie.page";
+import PreloaderComponent from "../preloader.component";
+import LoaderComponent from "./loader.component";
 export default function MainComponent() {
   const [isAuth, setIsAuth] = useState(false);
   const user = useSelector((state: any) => state.user);
+  const [isLoad, setIsLoad] = useState();
   useEffect(() => {
     if (user.data.access_token) {
       dispatch(
@@ -25,7 +28,6 @@ export default function MainComponent() {
       );
       setIsAuth(true);
     }
-    console.log(user.data);
   }, [user.data]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -35,33 +37,43 @@ export default function MainComponent() {
     <Box height={"100%"} width={"100%"}>
       <BrowserRouter>
         {isAuth ? (
-          <Box display={"flex"} height={"100%"}>
-            <Box height={"100%"}>
-              <SiderComponent></SiderComponent>
-            </Box>
-            <Box display={"flex"} flexDirection={"column"} flex={1}>
-              <NavBarComponent></NavBarComponent>
+          isLoad ? (
+            <Box display={"flex"} height={"100%"}>
+              <Box height={"100%"}>
+                <SiderComponent></SiderComponent>
+              </Box>
+              <Box display={"flex"} flexDirection={"column"} flex={1}>
+                <NavBarComponent></NavBarComponent>
 
-              <Routes>
-                <Route path={"/"} element={<HomePage></HomePage>}></Route>
-                <Route>
-                  <Route path="livre" element={<LivrePage></LivrePage>}></Route>
-                </Route>
-                <Route>
-                  <Route
-                    path="emprunt"
-                    element={<ListEmpruntPage></ListEmpruntPage>}
-                  ></Route>
-                </Route>
-                <Route>
-                  <Route
-                    path="categorie"
-                    element={<CategoriePage></CategoriePage>}
-                  ></Route>
-                </Route>
-              </Routes>
+                <Routes>
+                  <Route path={"/"} element={<HomePage></HomePage>}></Route>
+                  <Route>
+                    <Route
+                      path="livre"
+                      element={<LivrePage></LivrePage>}
+                    ></Route>
+                  </Route>
+                  <Route>
+                    <Route
+                      path="emprunt"
+                      element={<ListEmpruntPage></ListEmpruntPage>}
+                    ></Route>
+                  </Route>
+                  <Route>
+                    <Route
+                      path="categorie"
+                      element={<CategoriePage></CategoriePage>}
+                    ></Route>
+                  </Route>
+                </Routes>
+              </Box>
             </Box>
-          </Box>
+          ) : (
+            <>
+              <PreloaderComponent></PreloaderComponent>
+              <LoaderComponent setIsLoad={setIsLoad}></LoaderComponent>
+            </>
+          )
         ) : (
           <LoginPage></LoginPage>
         )}

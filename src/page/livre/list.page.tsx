@@ -12,13 +12,24 @@ import {
 } from "@mui/material";
 import PopUpComponent from "../../component/pop-up.component";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function LivrePage() {
   const [open, setOpen] = useState(false);
+  const livre = useSelector((state: any) => state.livre);
   return (
     <Box display={"flex"} flexDirection={"column"}>
       <Box alignSelf={"flex-end"} mt={3} mr={3}>
-        <Button onClick={()=>setOpen(true)} variant="contained">Ajouter</Button>
+        <Button onClick={() => setOpen(true)} variant="contained">
+          Ajouter un livre
+        </Button>
+        <Button
+          sx={{ ml: 5 }}
+          onClick={() => setOpen(true)}
+          variant="contained"
+        >
+          Ajouter un exemplaire
+        </Button>
       </Box>
       <Box width={"90%"} mt={3} alignSelf={"center"}>
         <TableContainer component={Paper}>
@@ -26,25 +37,29 @@ export default function LivrePage() {
             <TableHead>
               <TableRow>
                 <TableCell>N°</TableCell>
-                <TableCell align="right">Titre</TableCell>
-                <TableCell align="right">Catégorie</TableCell>
-                <TableCell align="right">Auteur</TableCell>
-                <TableCell align="right">Nombre examlaire</TableCell>
+                <TableCell>Titre</TableCell>
+                <TableCell>Catégorie</TableCell>
+                <TableCell>Auteur</TableCell>
+                <TableCell>Nombre examlaire</TableCell>
+                <TableCell>Disponible</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {[].map((row: any) => (
+              {livre.data?.map((row: any, index: number) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {index + 1}
                   </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
+                  <TableCell>{row.titre}</TableCell>
+                  <TableCell>{row.categorie?.label}</TableCell>
+                  <TableCell>{row.auteur}</TableCell>
+                  <TableCell>{row.exemplaire?.length}</TableCell>
+                  <TableCell>
+                    {row.exemplaire?.filter((item) => item.disponible)?.length}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -52,10 +67,15 @@ export default function LivrePage() {
         </TableContainer>
         <PopUpComponent open={open} setOpen={setOpen}>
           <Box width={600}>
-            <Typography color={'blackwœ'} textAlign={'center'} fontSize={20} fontWeight={'bold'} >Ajouter un livre</Typography>
-            <Box mt={3}>
-
-            </Box>
+            <Typography
+              color={"blackwœ"}
+              textAlign={"center"}
+              fontSize={20}
+              fontWeight={"bold"}
+            >
+              Ajouter un livre
+            </Typography>
+            <Box mt={3}></Box>
           </Box>
         </PopUpComponent>
       </Box>

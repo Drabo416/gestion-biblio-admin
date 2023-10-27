@@ -7,6 +7,8 @@ const Store = createStore(
     requestConfig: createDataReducer(ReducerEnum.RequestConfig, {}),
     currentError: createDataReducer(ReducerEnum.CurrentError, {}),
     user: createDataReducer(ReducerEnum.User, {}),
+    livre: createDataReducer(ReducerEnum.Livre, []),
+    categorie: createDataReducer(ReducerEnum.Categorie, []),
   })
 );
 
