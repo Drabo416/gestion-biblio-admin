@@ -54,7 +54,7 @@ export default function CategoriePage() {
         </TableContainer>
         <PopUpComponent open={open} setOpen={setOpen}>
           <Box width={600}>
-            <AddCategorieComponent></AddCategorieComponent>
+            <AddCategorieComponent setOpen={setOpen}></AddCategorieComponent>
           </Box>
         </PopUpComponent>
       </Box>

@@ -4,4 +4,5 @@ export enum ReducerEnum {
   CurrentError = "CurrentError",
   Livre = "Livre",
   Categorie = "Categorie",
+  Emprunt = "Emprunt",
 }

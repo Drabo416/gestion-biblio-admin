@@ -1,17 +1,11 @@
-import { Box, CircularProgress } from "@mui/material";
 import { useCallback, useEffect } from "react";
-import { useRequest } from "../../Rethinktecture/hook/fetch-data.hook";
-import {
-  CREATE_RESOURCE_REQUEST,
-  GET_RESOURCE_REQUEST,
-} from "../../Store/reducers/action";
 import { ReducerEnum } from "../../enum/reducer.enum";
+import { useRequest } from "../../Rethinkecture/hooks/use-request.hook";
 
 export default function LoaderComponent({ setIsLoad }) {
-  const { fetchData } = useRequest();
+  const { getRequest } = useRequest();
   const fetchRequest = useCallback(async (uri: string, stateName?: string) => {
-    const { data, error } = await fetchData({
-      type: GET_RESOURCE_REQUEST,
+    const { data, error } = await getRequest({
       uri: uri,
       stateName,
     });
@@ -22,6 +16,7 @@ export default function LoaderComponent({ setIsLoad }) {
       await Promise.all([
         fetchRequest("categorie", ReducerEnum.Categorie),
         fetchRequest("livre", ReducerEnum.Livre),
+        fetchRequest("emprunt", ReducerEnum.Emprunt),
       ]);
       setIsLoad(true);
     })();

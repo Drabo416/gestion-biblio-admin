@@ -2,37 +2,25 @@ import { Box } from "@mui/material";
 import SiderComponent from "../sider-component";
 import NavBarComponent from "../nav-bar.component";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RouteName } from "../../utils/constant/route-name";
 import HomePage from "../../page/home/home.page";
 import LivrePage from "../../page/livre/list.page";
 import ListEmpruntPage from "../../page/emprunt/list.page";
 import { useEffect, useState } from "react";
 import LoginPage from "../../page/auth/login.page";
-import { BaseUrl } from "../../api/base-url";
-import { useDispatch, useSelector } from "react-redux";
-import { ReducerEnum } from "../../enum/reducer.enum";
-import { addResource } from "../../Store/reducers/action";
+import { useSelector } from "react-redux";
 import CategoriePage from "../../page/categorie/categorie.page";
 import PreloaderComponent from "../preloader.component";
 import LoaderComponent from "./loader.component";
-export default function MainComponent() {
+export default function MainComponent({ setToken }) {
   const [isAuth, setIsAuth] = useState(false);
   const user = useSelector((state: any) => state.user);
   const [isLoad, setIsLoad] = useState();
   useEffect(() => {
     if (user.data.access_token) {
-      dispatch(
-        addResource(ReducerEnum.RequestConfig, {
-          token: user.data.access_token,
-        })
-      );
+      setToken(user.data.access_token);
       setIsAuth(true);
     }
-  }, [user.data]);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(addResource(ReducerEnum.RequestConfig, { baseUrl: BaseUrl }));
-  }, []);
+  }, [user]);
   return (
     <Box height={"100%"} width={"100%"}>
       <BrowserRouter>

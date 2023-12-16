@@ -13,9 +13,12 @@ import {
 import PopUpComponent from "../../component/pop-up.component";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import AddLivreComponent from "../../component/add-livre.component";
+import AddExemplaireComponent from "../../component/add-exemplaire.component";
 
 export default function LivrePage() {
   const [open, setOpen] = useState(false);
+  const [exemplaireOpen, setExemplaireOpen] = useState(false);
   const livre = useSelector((state: any) => state.livre);
   return (
     <Box display={"flex"} flexDirection={"column"}>
@@ -25,7 +28,7 @@ export default function LivrePage() {
         </Button>
         <Button
           sx={{ ml: 5 }}
-          onClick={() => setOpen(true)}
+          onClick={() => setExemplaireOpen(true)}
           variant="contained"
         >
           Ajouter un exemplaire
@@ -75,7 +78,26 @@ export default function LivrePage() {
             >
               Ajouter un livre
             </Typography>
-            <Box mt={3}></Box>
+            <Box mt={3}>
+              <AddLivreComponent setOpen={setOpen}></AddLivreComponent>
+            </Box>
+          </Box>
+        </PopUpComponent>
+        <PopUpComponent open={exemplaireOpen} setOpen={setExemplaireOpen}>
+          <Box width={600}>
+            <Typography
+              color={"blackwœ"}
+              textAlign={"center"}
+              fontSize={20}
+              fontWeight={"bold"}
+            >
+              Ajouter un exemplaire
+            </Typography>
+            <Box mt={3}>
+              <AddExemplaireComponent
+                setOpen={setExemplaireOpen}
+              ></AddExemplaireComponent>
+            </Box>
           </Box>
         </PopUpComponent>
       </Box>
